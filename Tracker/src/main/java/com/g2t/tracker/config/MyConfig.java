@@ -12,6 +12,8 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+import com.g2t.tracker.dao.RemainderCountDao;
+import com.g2t.tracker.dao.RemainderCountDaoImpl;
 import com.g2t.tracker.dao.RemainderDao;
 import com.g2t.tracker.dao.TaskDao;
 import com.g2t.tracker.dao.TaskDaoImpl;
@@ -63,6 +65,10 @@ public class MyConfig extends WebMvcConfigurerAdapter {
    @Bean
    public RemainderDao getRemaiderDao() {
 	   return new RemainderDao (getDataSource());
+   }
+   @Bean
+   public RemainderCountDao getRemainderCountDao() {
+	   return new RemainderCountDaoImpl(getDataSource());
    }
 	@Bean
 	public MultipartResolver multipartResolver() {

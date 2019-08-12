@@ -5,6 +5,7 @@ import javax.sql.DataSource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import com.g2t.tracker.controller.RemainderCountController;
 import com.g2t.tracker.model.User;
 @Component
 public class UserDaoImpl implements UserDao
@@ -28,7 +29,10 @@ try {
 			
 			String userId = jdbcTemplate.queryForObject(sql, new Object[] {
 					user.getUsername(), user.getPassword(),user.getRole() }, String.class);
-            
+            RemainderCountController remain = new RemainderCountController();
+            remain.getId(Integer.parseInt(userId));
+            System.out.println(userId);
+			
 			return userId;
 			
 		} catch (Exception e) {

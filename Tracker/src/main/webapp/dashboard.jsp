@@ -8,6 +8,7 @@
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
+
 <!doctype html>
 <html class="no-js" lang="en">
 
@@ -41,13 +42,19 @@
 <%-- <c:set var="id" value="${userId}"></c:set> --%>
 
 
-<%-- <c:out value="${userId}"></c:out>
-<c:if test="${sessionScope.userName==null}">
-	<c:redirect url="http://localhost:8080/Fin/login.jsp" />
-</c:if> --%>
+
+
+<%-- <c:if test="${sessionScope.userName==null}">
+	<c:redirect url="http://localhost:8081/Tracker/login.jsp" />
+</c:if>  --%>
+
 <sql:setDataSource var="db" driver="com.mysql.jdbc.Driver"
 	url="jdbc:mysql://localhost:3306/tracker" user="root" password="" />
-<script>
+
+
+
+	
+<!-- <script>
 	function myFunction() {
 	 setInterval(function(){ 
 			<sql:query dataSource="${db}" var="rs">  
@@ -55,11 +62,14 @@
 								</sql:query>}, 3000);  
 		/*  setInterval(function(){ alert("Hello"); }, 3000); */
 	}
-</script>
+</script> onload="javascript:myFunction()"-->
 </head>
 
-<body onload="javascript:myFunction()">
+<body >
 
+<%-- <sql:query dataSource="${db}" var="getid">  
+SELECT id from user WHERE=${userName};  
+</sql:query> --%>
 
 	<!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
@@ -71,6 +81,7 @@
 	<!-- preloader area end -->
 	<!-- page container area start -->
 	<div class="page-container">
+	
 		<!-- sidebar menu area start -->
 		<div class="sidebar-menu">
 			<div class="sidebar-header">
@@ -83,7 +94,7 @@
 				<div class="menu-inner">
 					<nav>
 						<ul class="metismenu" id="menu">
-							<li class="active"><li class="active"><a href="dashboard.jsp">Dashboard</a></li>
+							<li class="active"><li class="active"><a href="check">Dashboard</a></li>
 								<!-- <ul class="collapse">
                                    
                                     
@@ -95,7 +106,7 @@
 									class="ti-layout-sidebar-left"></i><span> Tasks </span></a>
 								<ul class="collapse">
 									<li><a href="gettask">My Task</a></li>
-									<li><a href="index3-horizontalmenu.html">Horizontal
+									<li><a href="">Horizontal
 											Sidebar</a></li>
 								</ul></li>
 							<li><a href="javascript:void(0)" aria-expanded="true"><i
@@ -211,13 +222,13 @@
 						     <i class="ti-bell dropdown-toggle"
 								data-toggle="dropdown"> 
 								
-								<c:forEach var="ul" items="${rs.rows}">
-								<span><c:out value=" ${ul.remainder}" /></a>
-								 </c:forEach>
+								<%-- <c:forEach var="ul" items="${rs.rows}"> --%>
+								<span id="remainderNoti">${myRemainderCount} <%-- <c:out value=" ${ul.remainder}" /> --%></span>
+								<%--  </c:forEach> --%>
 							</i> 
 								<div class="dropdown-menu bell-notify-box notify-box">
 								<c:forEach var="ul" items="${rs.rows}">
-									<span class="notify-title">You have <c:out value=" ${ul.remainder}" /> new notifications
+									<span id="remainderNoti" class="notify-title">You have ${myRemainderCount} new notifications
 									</c:forEach>
 										<a href="clearRemainder">view all</a>
 									</span>
@@ -319,12 +330,12 @@
 							<img class="avatar user-thumb"
 								src="assets/images/author/avatar.png" alt="avatar">
 							<h4 class="user-name dropdown-toggle" data-toggle="dropdown">
-								Kumkum Rai <i class="fa fa-angle-down"></i>
+								<input class="user-name" style="background-color: #38030300; color: black; border:none;border-color: transparent;" id="profilename"  name="profilename" type="text" value="<c:out value="${username}"/>" disabled/> <i class="fa fa-angle-down"></i>
 							</h4>
 							<div class="dropdown-menu">
 								<a class="dropdown-item" href="#">Message</a> <a
 									class="dropdown-item" href="#">Settings</a> <a
-									class="dropdown-item" href="#">Log Out</a>
+									class="dropdown-item" href="logout">Log Out</a>
 							</div>
 						</div>
 					</div>
@@ -965,5 +976,32 @@
 	<script src="assets/js/plugins.js"></script>
 	<script src="assets/js/scripts.js"></script>
 </body>
+	<script>
+	
+	$( document ).ready(function() {
+		 //myVar = setInterval("showTime()", 1000);
+		setInterval("myFunction()",3000);
+	});
 
+	function myFunction() {
+		
+		console.log("hi");
+			$.ajax({
+				
+		        type: "get",
+		        url: "http://localhost:8081/Tracker/check",
+		        cache: false,    
+		        
+		        success: function(data){
+		         $('#remainderNoti').text(data);
+		        // $('#remainderNoti').show;
+		         
+		        }
+		         
+		       });
+		   
+	}
+		
+
+</script>
 </html>

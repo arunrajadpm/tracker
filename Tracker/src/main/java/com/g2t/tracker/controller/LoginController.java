@@ -79,7 +79,7 @@ public class LoginController {
 
 	private void addUserInSession (User u, HttpSession session) {
 		session.setAttribute("user", u);
-		session.setAttribute("userId", u.getId());
+		session.setAttribute("UserName", u.getName());
 		
 		
 	}
