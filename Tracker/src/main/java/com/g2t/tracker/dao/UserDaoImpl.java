@@ -29,10 +29,9 @@ try {
 			
 			String userId = jdbcTemplate.queryForObject(sql, new Object[] {
 					user.getUsername(), user.getPassword(),user.getRole() }, String.class);
-            RemainderCountController remain = new RemainderCountController();
-            remain.getId(Integer.parseInt(userId));
             
-            System.out.println(userId);
+            user.setName(user.getUsername());
+            user.setId(userId);
 			
 			return userId;
 			

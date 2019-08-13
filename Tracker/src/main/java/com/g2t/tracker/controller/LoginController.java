@@ -13,10 +13,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 import com.g2t.tracker.dao.UserDao;
+import com.g2t.tracker.model.Logindata;
 import com.g2t.tracker.model.User;
+
 
 @Controller
 public class LoginController {
+	
 	@Autowired
 	UserDao userDao;
 	
@@ -47,6 +50,10 @@ public class LoginController {
 		if (validus != null) {
 			addUserInSession(user, session);
 			
+			mv.addObject("userid", user.getId());
+			
+			
+			
 			switch (rl) {
 			
 			case "Admin":
@@ -74,13 +81,12 @@ public class LoginController {
 
 	}
 	
-	
 		
 
 	private void addUserInSession (User u, HttpSession session) {
 		session.setAttribute("user", u);
 		session.setAttribute("UserName", u.getName());
-		
+		session.setAttribute("UserId", u.getId());
 		
 	}
 

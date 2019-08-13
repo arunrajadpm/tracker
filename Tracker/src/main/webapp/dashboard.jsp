@@ -43,10 +43,9 @@
 
 
 
-
-<%-- <c:if test="${sessionScope.userName==null}">
+<c:if test="${sessionScope.UserName==null}">
 	<c:redirect url="http://localhost:8081/Tracker/login.jsp" />
-</c:if>  --%>
+</c:if>  
 
 <sql:setDataSource var="db" driver="com.mysql.jdbc.Driver"
 	url="jdbc:mysql://localhost:3306/tracker" user="root" password="" />
@@ -94,7 +93,7 @@ SELECT id from user WHERE=${userName};
 				<div class="menu-inner">
 					<nav>
 						<ul class="metismenu" id="menu">
-							<li class="active"><li class="active"><a href="check">Dashboard</a></li>
+							<li class="active"><li class="active"><a href="dashboard.jsp">Dashboard</a></li>
 								<!-- <ul class="collapse">
                                    
                                     
@@ -235,7 +234,7 @@ SELECT id from user WHERE=${userName};
 									
 								</div></li>
 							<li class="dropdown"><i
-								class="fa fa-envelope-o dropdown-toggle" data-toggle="dropdown"><span>3</span></i>
+								class="fa fa-envelope-o dropdown-toggle" data-toggle="dropdown"><span id="userid"><c:out value="${sessionScope.UserId}"/></span></i>
 								<div class="dropdown-menu notify-box nt-enveloper-box">
 									<span class="notify-title">You have 3 new notifications
 										<a href="#">view all</a>
@@ -326,16 +325,16 @@ SELECT id from user WHERE=${userName};
 						</div>
 					</div>
 					<div class="col-sm-6 clearfix">
+					
 						<div class="user-profile pull-right">
-							<img class="avatar user-thumb"
-								src="assets/images/author/avatar.png" alt="avatar">
-							<h4 class="user-name dropdown-toggle" data-toggle="dropdown">
-								<input class="user-name" style="background-color: #38030300; color: black; border:none;border-color: transparent;" id="profilename"  name="profilename" type="text" value="<c:out value="${username}"/>" disabled/> <i class="fa fa-angle-down"></i>
-							</h4>
+							<img class="avatar user-thumb" src="assets/images/author/avatar.png" alt="avatar">
+                            <h4 class="user-name dropdown-toggle" id="rem" data-toggle="dropdown"> <c:out value="${sessionScope.UserName}"/> <i class="fa fa-angle-down"></i></h4>
 							<div class="dropdown-menu">
 								<a class="dropdown-item" href="#">Message</a> <a
 									class="dropdown-item" href="#">Settings</a> <a
 									class="dropdown-item" href="logout">Log Out</a>
+									
+									
 							</div>
 						</div>
 					</div>
@@ -984,13 +983,16 @@ SELECT id from user WHERE=${userName};
 	});
 
 	function myFunction() {
+	 var userId = $('#userid').val();
 		
-		console.log("hi");
+		console.log("${userid}");
 			$.ajax({
 				
 		        type: "get",
 		        url: "http://localhost:8081/Tracker/check",
-		        cache: false,    
+		        cache: false, 
+		             		        
+		        
 		        
 		        success: function(data){
 		         $('#remainderNoti').text(data);

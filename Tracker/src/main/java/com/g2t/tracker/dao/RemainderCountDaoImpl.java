@@ -22,7 +22,7 @@ RemainderCounter remainderCounter = new RemainderCounter();
 	}
 	
 	@Override
-	public int getRemainderCount(int id) {
+	public int getRemainderCount(String id) {
 	
 		String sql = "SELECT COUNT(task) AS remainder FROM task WHERE userid="+id+" AND status=0";
 		 return jdbcTemplate.queryForObject(sql, Integer.class);
