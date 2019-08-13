@@ -983,9 +983,9 @@ SELECT id from user WHERE=${userName};
 	});
 
 	function myFunction() {
-	 var userId = $('#userid').val();
+	
 		
-		console.log("${userid}");
+	
 			$.ajax({
 				
 		        type: "get",
